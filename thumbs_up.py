@@ -61,19 +61,19 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
                 if is_index_finger_down(hand_landmarks.landmark):
-                    print("Indicador levantado! Enviando valor 45 via MQTT...")
+                    print("Indicador abaixado! Enviando valor 45 via MQTT...")
                     send_servo_angle(45)
 
                 elif is_middle_finger_down(hand_landmarks.landmark):
-                    print("Dedo médio levantado! Enviando valor 180 via MQTT...")
+                    print("Dedo médio abaixado! Enviando valor 180 via MQTT...")
                     send_servo_angle(180)
 
                 elif is_pinky_finger_down(hand_landmarks.landmark):
-                    print("Mindinho levantado! Enviando valor 0 via MQTT...")
+                    print("Mindinho abaixado! Enviando valor 0 via MQTT...")
                     send_servo_angle(0)
 
                 elif is_thumb_finger_down(hand_landmarks.landmark):
-                    print("Dedão levantado levantado! Enviando valor 90 via MQTT...")
+                    print("Dedão abaixado! Enviando valor 90 via MQTT...")
                     send_servo_angle(90)
                 
                 if is_thumb_and_index_touching(hand_landmarks.landmark):
