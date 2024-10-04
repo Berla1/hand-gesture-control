@@ -66,6 +66,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:            
                 if is_thumb_and_index_touching(hand_landmarks.landmark):
+                   send_servo_angle(45)
                    cv2.putText(frame, "Polegar e Indicador juntos!", 
                                 (50, 50),  
                                 cv2.FONT_HERSHEY_SIMPLEX,  
@@ -74,6 +75,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                                 2,  
                                 cv2.LINE_AA)  
                 elif is_thumb_and_middle_touching(hand_landmarks.landmark):
+                    send_servo_angle(0)
                     cv2.putText(frame, "Polegar e dedo do meio juntos!", 
                                 (50, 50),  
                                 cv2.FONT_HERSHEY_SIMPLEX,  
@@ -83,6 +85,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                                 cv2.LINE_AA)  
                     
                 elif is_thumb_and_ring_touching(hand_landmarks.landmark):
+                    send_servo_angle(90)
                     cv2.putText(frame, "Polegar e anelar juntos!", 
                                 (50, 50),  
                                 cv2.FONT_HERSHEY_SIMPLEX,  
@@ -92,6 +95,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                                 cv2.LINE_AA)
                       
                 elif is_thumb_and_pinky_touching(hand_landmarks.landmark):
+                    send_servo_angle(180)
                     cv2.putText(frame, "Polegar e mindinho juntos!", 
                                 (50, 50),  
                                 cv2.FONT_HERSHEY_SIMPLEX,  

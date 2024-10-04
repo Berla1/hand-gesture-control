@@ -12,7 +12,7 @@ broker_address = "18.208.160.16"
 client = mqtt.Client("HandGestureClient")
 client.connect(broker_address)
 
-# Tópico MQTT para publicação
+#Tópico MQTT para publicação
 mqtt_topic = "/TEF/device010/servo/cmd"  
 
 def calculate_distance(point1, point2):
@@ -35,8 +35,8 @@ def is_index_finger_down(hand_landmarks):
 def is_middle_finger_down(hand_landmarks):
     return hand_landmarks[12].y > hand_landmarks[10].y  # Médio
 
-def is_pinky_finger_down(hand_landmarks):
-    return hand_landmarks[20].y > hand_landmarks[18].y  # Mindinho
+def is_ring_finger_down(hand_landmarks):
+    return hand_landmarks[16].y > hand_landmarks[14].y  # Mindinho
 
 def is_thumb_finger_down(hand_landmarks):
     return hand_landmarks[4].x > hand_landmarks[2].x  # Dedão
@@ -68,7 +68,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                     print("Dedo médio abaixado! Enviando valor 180 via MQTT...")
                     send_servo_angle(180)
 
-                elif is_pinky_finger_down(hand_landmarks.landmark):
+                elif is_ring_finger_down(hand_landmarks.landmark):
                     print("Mindinho abaixado! Enviando valor 0 via MQTT...")
                     send_servo_angle(0)
 
