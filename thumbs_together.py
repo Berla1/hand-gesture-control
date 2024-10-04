@@ -82,7 +82,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                                 1,  
                                 (0, 0, 255),  
                                 2,  
-                                cv2.LINE_AA)  
+                                cv2.LINE_AA)
                     
                 elif is_thumb_and_ring_touching(hand_landmarks.landmark):
                     send_servo_angle(90)

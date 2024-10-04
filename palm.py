@@ -13,7 +13,7 @@ client = mqtt.Client("HandGestureClient")
 client.connect(broker_address)
 
 #Tópico MQTT para publicação
-mqtt_topic = "/TEF/device010/servo/cmd"  
+mqtt_topic = "/TEF/device010/motor/cmd"  
 
 def calculate_distance(point1, point2):
     return math.sqrt((point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2)
@@ -25,27 +25,41 @@ def is_thumb_and_index_touching(hand_landmarks):
     return distance < 0.05  
 
 # Função para enviar o ângulo do servo via MQTT
-def send_servo_angle(angle):
-    client.publish(mqtt_topic, str(angle))  
+def send_motor_state(state):
+    client.publish(mqtt_topic, str(state))  
 
 # Funções para identificar se os dedos estão levantados
 def is_index_finger_down(hand_landmarks):
-    return hand_landmarks[8].y > hand_landmarks[6].y  # Indicador
+    return hand_landmarks[8].y > hand_landmarks[6].y  # Indicador abaixado
 
 def is_middle_finger_down(hand_landmarks):
-    return hand_landmarks[12].y > hand_landmarks[10].y  # Médio
+    return hand_landmarks[12].y > hand_landmarks[10].y  # Médio abaixado
 
 def is_ring_finger_down(hand_landmarks):
-    return hand_landmarks[16].y > hand_landmarks[14].y  # Anelar
+    return hand_landmarks[16].y > hand_landmarks[14].y  # Anelar abaixado
 
-def is_thumb_finger_down(hand_landmarks):
-    return hand_landmarks[4].x > hand_landmarks[2].x  # Dedão
+def is_pinky_finger_down(hand_landmarks):
+    return hand_landmarks[2].x > hand_landmarks[18].x  # Mindinho abaixado
+
+#############################################################################################################
+
+def is_index_finger_up(hand_landmarks):
+    return hand_landmarks[8].y < hand_landmarks[6].y  # Indicador levantado
+
+def is_middle_finger_up(hand_landmarks):
+    return hand_landmarks[12].y < hand_landmarks[10].y  # Médio levantado
+
+def is_ring_finger_up(hand_landmarks):
+    return hand_landmarks[16].y < hand_landmarks[14].y  # Anelar levantado
+
+def is_pinky_finger_up(hand_landmarks):
+    return hand_landmarks[2].x < hand_landmarks[18].x  # Mindinho levantado
 
 # Inicializa a webcam
 cap = cv2.VideoCapture(0)
 
 # Inicializa MediaPipe para detectar mãos
-with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_confidence=0.7) as hands:
+with mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.7, min_tracking_confidence=0.7) as hands:
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
@@ -60,30 +74,26 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
         # Verifica se há mãos detectadas
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
-                if is_index_finger_down(hand_landmarks.landmark):
-                    print("Indicador abaixado! Enviando valor 45 via MQTT...")
-                    send_servo_angle(45)
-
-                elif is_middle_finger_down(hand_landmarks.landmark):
-                    print("Dedo médio abaixado! Enviando valor 180 via MQTT...")
-                    send_servo_angle(180)
-
-                elif is_ring_finger_down(hand_landmarks.landmark):
-                    print("Mindinho abaixado! Enviando valor 0 via MQTT...")
-                    send_servo_angle(0)
-
-                elif is_thumb_finger_down(hand_landmarks.landmark):
-                    print("Dedão abaixado! Enviando valor 90 via MQTT...")
-                    send_servo_angle(90)
-                
-                if is_thumb_and_index_touching(hand_landmarks.landmark):
-                   cv2.putText(frame, "Polegar e Indicador juntos!", 
+                if is_index_finger_down(hand_landmarks.landmark) and is_middle_finger_down and is_ring_finger_down and is_pinky_finger_down:
+                   send_motor_state(0)
+                   cv2.putText(frame, "Mão fechada!", 
                                 (50, 50),  # Posição (x, y) no vídeo
                                 cv2.FONT_HERSHEY_SIMPLEX,  
                                 1,  # Tamanho da fonte
                                 (0, 0, 255),  # Cor (BGR): verde
                                 2,  # Espessura da linha
                                 cv2.LINE_AA)  # Tipo de linha
+                   
+                elif is_index_finger_up(hand_landmarks.landmark) and is_middle_finger_up and is_middle_finger_up and is_pinky_finger_up:
+                    send_motor_state(1)
+                    cv2.putText(frame, "Mão aberta", 
+                                (50, 50),  # Posição (x, y) no vídeo
+                                cv2.FONT_HERSHEY_SIMPLEX,  
+                                1,  # Tamanho da fonte
+                                (0, 0, 255),  # Cor (BGR): verde
+                                2,  # Espessura da linha
+                                cv2.LINE_AA)  # Tipo de linha
+
 
                 # Desenha os pontos da mão
                 mp_drawing.draw_landmarks(
