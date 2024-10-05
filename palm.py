@@ -66,7 +66,6 @@ with mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.7, min_tracking_
             print("Falha ao acessar a webcam")
             break
 
-        # Converte a imagem para RGB
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         image.flags.writeable = False
         results = hands.process(image)
