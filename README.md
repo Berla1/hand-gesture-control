@@ -58,6 +58,9 @@ broker_address = "seu-endereco-broker"
 2. Posicione sua mão direita ou esquerda em frente à câmera.
 3. O sistema detectará os gestos e enviará os comandos correspondentes via MQTT.
 
+## Simulação
+Este projeto se conecta com a simulação do Wokwi disponível [neste link](https://wokwi.com/projects/410939409087034369). Com o código em Python rodando, os dispositivos da simulação podem ser controlados através dos gestos da mão.
+
 ## Encerramento
 - Para sair, pressione a tecla `q` enquanto a janela da webcam estiver aberta.
 
