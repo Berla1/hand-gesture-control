@@ -17,36 +17,36 @@ Este projeto implementa um sistema de controle baseado em gestos da mão usando 
 ## Instalação
 
 1. Clone o repositório:
-    \`\`\`bash
+    ```bash
     git clone https://github.com/usuario/hand-gesture-control.git
     cd hand-gesture-control
-    \`\`\`
+    ```
 
 2. Instale as dependências:
-    \`\`\`bash
+    ```bash
     pip install opencv-python mediapipe paho-mqtt
-    \`\`\`
+    ```
 
 3. Execute o código:
-    \`\`\`bash
-    python main.py
-    \`\`\`
+    ```python
+    main.py
+    ```
 
 ## Configuração do MQTT
 No código, o cliente MQTT está configurado para se conectar ao broker com o endereço **3.83.132.206**. Se você precisar alterar o endereço, modifique a linha no código:
 
-\`\`\`python
+```python
 broker_address = "seu-endereco-broker"
-\`\`\`
+```
 
 ## Tópicos MQTT
 
-- **Tópico para o Motor**: \`/TEF/device010/motor/cmd\`
-- **Tópico para o Servo**: \`/TEF/device010/servo/cmd\`
+- **Tópico para o Motor**: `/TEF/device010/motor/cmd`
+- **Tópico para o Servo**: `/TEF/device010/servo/cmd`
 
 ### Controle do Motor (Mão Esquerda)
-- **Mão fechada**: Envia o comando \`0\` para o motor (desligar).
-- **Mão aberta**: Envia o comando \`1\` para o motor (ligar).
+- **Mão fechada**: Envia o comando `0` para o motor (desligar).
+- **Mão aberta**: Envia o comando `1` para o motor (ligar).
 
 ### Controle do Servo (Mão Direita)
 - **Polegar e indicador juntos**: Define o ângulo do servo para 45 graus.
@@ -59,11 +59,5 @@ broker_address = "seu-endereco-broker"
 3. O sistema detectará os gestos e enviará os comandos correspondentes via MQTT.
 
 ## Encerramento
-- Para sair, pressione a tecla \`q\` enquanto a janela da webcam estiver aberta.
-
-## Demonstração
-Aqui está uma prévia de como os gestos são detectados e processados no vídeo ao vivo:
-
-- **Mão direita (servo)**: ![Servo Control](link-to-demo-image)
-- **Mão esquerda (motor)**: ![Motor Control](link-to-demo-image)
+- Para sair, pressione a tecla `q` enquanto a janela da webcam estiver aberta.
 
