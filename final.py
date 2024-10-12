@@ -8,7 +8,7 @@ mp_drawing = mp.solutions.drawing_utils
 mp_styles = mp.solutions.drawing_styles
 
 # Configura o cliente MQTT
-broker_address = "18.208.160.16"
+broker_address = "3.83.132.206"
 client = mqtt.Client("HandGestureClient")
 client.connect(broker_address)
 
@@ -144,7 +144,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                                     2,  
                                     cv2.LINE_AA)
                     elif is_thumb_and_middle_touching(hand_landmarks_list):
-                        send_servo_angle(0)
+                        send_servo_angle(90) # Servo para esquerda (roda direita)
                         cv2.putText(image, "Polegar e Médio juntos (Esquerda)", 
                                     (10, 60),  
                                     cv2.FONT_HERSHEY_SIMPLEX,  
@@ -153,17 +153,8 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                                     2,  
                                     cv2.LINE_AA)
                     elif is_thumb_and_ring_touching(hand_landmarks_list):
-                        send_servo_angle(90)
+                        send_servo_angle(150)
                         cv2.putText(image, "Polegar e Anelar juntos (Esquerda)", 
-                                    (10, 60),  
-                                    cv2.FONT_HERSHEY_SIMPLEX,  
-                                    1,  
-                                    (0, 255, 0),  
-                                    2,  
-                                    cv2.LINE_AA)
-                    elif is_thumb_and_pinky_touching(hand_landmarks_list):
-                        send_servo_angle(180)
-                        cv2.putText(image, "Polegar e Mindinho juntos (Esquerda)", 
                                     (10, 60),  
                                     cv2.FONT_HERSHEY_SIMPLEX,  
                                     1,  
