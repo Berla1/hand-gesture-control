@@ -8,7 +8,7 @@ mp_drawing = mp.solutions.drawing_utils
 mp_styles = mp.solutions.drawing_styles
 
 # Configura o cliente MQTT
-broker_address = "3.83.132.206"
+broker_address = "20.206.161.174"
 client = mqtt.Client("HandGestureClient")
 client.connect(broker_address)
 
@@ -113,7 +113,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                         is_ring_finger_down(hand_landmarks_list) and 
                         is_pinky_finger_down(hand_landmarks_list)):
                         send_motor_state(0)
-                        cv2.putText(image, "Mão fechada (Direita)", 
+                        cv2.putText(image, "Mão fechada (Para)", 
                                     (10, 30),  
                                     cv2.FONT_HERSHEY_SIMPLEX,  
                                     1,  
@@ -125,13 +125,26 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                           is_ring_finger_up(hand_landmarks_list) and 
                           is_pinky_finger_up(hand_landmarks_list)):
                         send_motor_state(1)
-                        cv2.putText(image, "Mão aberta (Direita)", 
+                        cv2.putText(image, "Mão aberta (Anda pra frente)", 
                                     (10, 30),  
                                     cv2.FONT_HERSHEY_SIMPLEX,  
                                     1,  
                                     (0, 0, 255),  
                                     2,  
                                     cv2.LINE_AA)
+                        
+                    elif (is_index_finger_up(hand_landmarks_list) and 
+                          is_middle_finger_up(hand_landmarks_list) and 
+                          is_ring_finger_down(hand_landmarks_list) and 
+                          is_pinky_finger_down(hand_landmarks_list)):
+                        send_motor_state(2)
+                        cv2.putText(image, "Salve (Anda pra trás)", 
+                                    (10, 30),  
+                                    cv2.FONT_HERSHEY_SIMPLEX,  
+                                    1,  
+                                    (0, 0, 255),  
+                                    2,  
+                                    cv2.LINE_AA) 
                 elif hand_label == 'Left':
                     # Processa gestos da mão direita (servo)
                     if is_thumb_and_index_touching(hand_landmarks_list):
