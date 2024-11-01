@@ -138,7 +138,7 @@ with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_
                           is_ring_finger_down(hand_landmarks_list) and 
                           is_pinky_finger_down(hand_landmarks_list)):
                         send_motor_state(2)
-                        cv2.putText(image, "Salve (Anda pra trás)", 
+                        cv2.putText(image, " Dois dedos (Da ré)", 
                                     (10, 30),  
                                     cv2.FONT_HERSHEY_SIMPLEX,  
                                     1,  
