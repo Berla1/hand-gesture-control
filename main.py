@@ -79,7 +79,7 @@ def send_servo_angle(angle):
     client.publish(mqtt_topic_servo, str(angle))
 
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0) 
 with mp_hands.Hands(max_num_hands=2, min_detection_confidence=0.7, min_tracking_confidence=0.7) as hands:
     while cap.isOpened():
         ret, frame = cap.read()
