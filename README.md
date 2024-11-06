@@ -47,6 +47,7 @@ broker_address = "seu-endereco-broker"
 ### Controle do Motor (Mão Esquerda)
 - **Mão fechada**: Envia o comando `0` para o motor (desligar).
 - **Mão aberta**: Envia o comando `1` para o motor (ligar).
+- ** Mão fazendo número dois**: Envia o comando `2` para o motor (dar ré).
 
 ### Controle do Servo (Mão Direita)
 - **Polegar e indicador juntos**: Define o ângulo do servo para 45 graus.
