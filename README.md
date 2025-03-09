@@ -65,3 +65,8 @@ Este projeto se conecta com a simulação do Wokwi disponível [neste link](http
 ## Encerramento
 - Para sair, pressione a tecla `q` enquanto a janela da webcam estiver aberta.
 
+
+## Demonstração de uso
+
+[![Controlando carrinho com gestos das mãos](https://img.youtube.com/vi/0BRyTk86wu4/maxresdefault.jpg)](https://www.youtube.com/watch?v=0BRyTk86wu4)
+
